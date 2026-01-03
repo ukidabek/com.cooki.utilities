@@ -10,7 +10,7 @@ namespace Utilities.General
 
         protected readonly Dictionary<Key, T> m_collectionDictionary = new Dictionary<Key, T>();
         
-        public void Initialize()
+        public virtual void Initialize()
         {
             foreach (var item in m_items)
                 m_collectionDictionary.Add(item.Key, item);
