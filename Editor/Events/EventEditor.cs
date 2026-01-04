@@ -24,7 +24,7 @@ namespace Utilities.General.Events.Core
         {
             var type = target.GetType();
             var baseType = type.BaseType;
-            m_genericArguments = type == typeof(Event) ? Array.Empty<Type>() : baseType.GetGenericArguments();
+            m_genericArguments = type == typeof(VoidEvent) ? Array.Empty<Type>() : baseType.GetGenericArguments();
 
             var bindingFlags = EventEditorUtilities.Binding_Flags;
             m_invokeMethodInfo = m_genericArguments.Any() ?
