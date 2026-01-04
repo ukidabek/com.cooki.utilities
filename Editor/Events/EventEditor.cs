@@ -63,8 +63,16 @@ namespace Utilities.General.Events.Core
             GUI.enabled = false;
             foreach (var listener in m_enumerable)
             {
-                if(listener is not MonoBehaviour current) continue;
+                if (listener is not Object current)
+                {
+                    EditorGUILayout.LabelField($"{listener.GetType().Name}");
+                    continue;
+                }
+#if UNITY_6000_1_OR_NEWER
+                EditorGUILayout.ObjectField(current, m_objetType, allowSceneObjects: true);
+#else
                 EditorGUILayout.ObjectField(current, m_objetType);
+#endif
                 GUILayout.Space(EditorGUIUtility.standardVerticalSpacing);
             }
             GUI.enabled = oldEnabled;
