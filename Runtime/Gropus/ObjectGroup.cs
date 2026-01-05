@@ -35,13 +35,13 @@ namespace Utilities.Groups
             RemoveObject(@object);
         }
 
-        public void AddObject(T obj)
+        public virtual void AddObject(T obj)
         {
             if (!m_objects.Add(obj)) return;
             OnObjectAdded.Invoke(obj);
         }
 
-        public void RemoveObject(T obj)
+        public virtual void RemoveObject(T obj)
         {
             if (!m_objects.Remove(obj)) return;
             OnObjectRemoved.Invoke(obj);
