@@ -4,7 +4,7 @@ using Utilities.General.Events.Core;
 namespace Utilities.General.Events
 {
     [CreateAssetMenu(menuName = "Utilities/Events/ObjectEvent", fileName = "ObjectEvent")]
-    public class ObjectEvent : ParameterizedEvent<UnityEngine.Object>
+    public class ObjectEvent : ParameterizedEvent<Object>
     {
     }
 }
