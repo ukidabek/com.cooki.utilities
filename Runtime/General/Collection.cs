@@ -13,9 +13,11 @@ namespace Utilities.General
         public virtual void Initialize()
         {
             foreach (var item in m_items)
-                m_collectionDictionary.Add(item.Key, item);
+                InitializeItem(item);
         }
-        
+
+        protected virtual void InitializeItem(T item) => m_collectionDictionary.Add(item.Key, item);
+
         public virtual void Tick(float deltaTime, float timeScale)
         {
             var count = m_items.Count;
