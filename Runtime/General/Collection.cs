@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Utilities.General
 {
-    public abstract class Collection<T> : ICollection<T>, ITickableElement where T : IKeyableElement
+    public abstract class Collection<T> : ICollection<T> where T : IKeyableElement
     {
         [SerializeReference, ReferenceList] protected List<T> m_items = new List<T>(30);
 
@@ -16,8 +16,15 @@ namespace Utilities.General
                 InitializeItem(item);
         }
 
+        public void Reset()
+        {
+            foreach (var item in m_items)
+                ResetItem(item);
+        }
+
         protected virtual void InitializeItem(T item) => m_collectionDictionary.Add(item.Key, item);
 
+        protected virtual void ResetItem(T item) { }
         public virtual void Tick(float deltaTime, float timeScale)
         {
             var count = m_items.Count;
