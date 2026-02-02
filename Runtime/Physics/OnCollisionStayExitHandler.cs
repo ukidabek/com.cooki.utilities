@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Utilities.Physics
 {
-    public class OnCollisionStayExit : CollisionHandler<Collision>
+    public class OnCollisionStayExitHandler : CollisionHandler<Collision>
     {
         protected virtual void OnCollisionEnter(Collision other) => OnCollision.Invoke(other);
     }
