@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Utilities.Physics
+namespace Utilities.Physic
 {
     public class CollisionHandler<T> : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Utilities.Physics
+namespace Utilities.Physic
 {
     public class OnCollisionStayHandler : CollisionHandler<Collision>
     {

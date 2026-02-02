@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Utilities.Physics
+namespace Utilities.Physic
 {
     public class OnTriggerEnterHandler : CollisionHandler<Collider>
     {
