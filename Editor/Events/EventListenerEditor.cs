@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Utilities.General.Events.Core
 {
-    [CustomEditor(typeof(EventListener), true)]
+    [CustomEditor(typeof(EventListenerBehaviour), true)]
     public class EventListenerEditor : Editor
     {
         private Type m_baseType =  typeof(IEventListener);

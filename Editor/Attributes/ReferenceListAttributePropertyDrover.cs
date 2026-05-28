@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.SceneManagement;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Profiling;
@@ -29,8 +30,12 @@ namespace Utilities.General
                 return;
             }
 
+            EditorGUI.BeginChangeCheck();
             m_reorderableList.DoList(position);
-            m_reorderableList.serializedProperty.serializedObject.UpdateIfRequiredOrScript();
+            var changeChapped = EditorGUI.EndChangeCheck();
+            var serializedObject = m_reorderableList.serializedProperty.serializedObject;
+            ReferencePropertyDroverHelper.SaveAndReserialize(serializedObject, changeChapped);
+            AssetDatabase.SaveAssetIfDirty(serializedObject.targetObject);
             Profiler.EndSample();
         }
 

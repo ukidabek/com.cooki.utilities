@@ -4,8 +4,9 @@
   "displayName": "Utilities",
   "description": "This package provides generic utilities.",
   "author": {
-    "name": "\u0141ukasz D\u0105bek",
+    "name": "Łukasz Dąbek",
     "email": "ukidabek@gmail.com"
   },
-  "unity": "2021.1"
+  "unity": "2021.1",
+  "_fingerprint": "ce20f87446a2977d7fc520e648deac70184c06d8"
 }

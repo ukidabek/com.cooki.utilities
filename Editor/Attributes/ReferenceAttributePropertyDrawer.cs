@@ -8,7 +8,7 @@ namespace Utilities.General
 #if UNITY_2023_1_OR_NEWER
     [CustomPropertyDrawer(typeof(ReferenceAttribute))]
 #endif  
-    public class ReferenceAttributePropertyDrover : PropertyDrawer
+    public class ReferenceAttributePropertyDrawer : PropertyDrawer
     {
         private TypeProvider m_typeProvider = null;
         
@@ -65,7 +65,7 @@ namespace Utilities.General
             if (GUI.Button(controlPosition, "Clear"))
             {
                 property.managedReferenceValue = null;
-                property.serializedObject.ApplyModifiedProperties();
+                ReferencePropertyDroverHelper.SaveAndReserialize(property.serializedObject);
             }
             EditorGUI.EndProperty();
         }

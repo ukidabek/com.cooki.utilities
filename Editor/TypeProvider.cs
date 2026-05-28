@@ -100,11 +100,9 @@ namespace Utilities.General
                     newElement.managedReferenceValue = instance;
                 }
                 else
-                {
                     Property.managedReferenceValue = instance;
-                }
-                Property.serializedObject.ApplyModifiedProperties();
-                Property.serializedObject.UpdateIfRequiredOrScript();
+
+                ReferencePropertyDroverHelper.SaveAndReserialize(Property.serializedObject);
             }
             catch (Exception e)
             {

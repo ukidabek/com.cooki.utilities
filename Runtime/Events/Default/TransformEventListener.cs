@@ -3,7 +3,7 @@ using Utilities.General.Events.Core;
 
 namespace Utilities.General.Events
 {
-    public class TransformEventListener : EventListener<TransformEvent, Transform>
+    public class TransformEventListener : EventListenerBehaviour<TransformEvent, Transform>
     {
     }
 }

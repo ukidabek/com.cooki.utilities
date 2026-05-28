@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Utilities.General
@@ -7,24 +6,19 @@ namespace Utilities.General
     [CreateAssetMenu(fileName = "NewKey", menuName = "Utilities/Key")]
     public class Key : ScriptableObject, IEquatable<Key>
     {
-        private static Dictionary<int, Key> m_registeredKeys = new Dictionary<int, Key>();
-        
         [SerializeField, HideInInspector] private int m_hash = default;
+        [SerializeField, HideInInspector] private string m_guid = default;
+        
+        private void OnValidate() => Hash();
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Clear() => m_registeredKeys = new Dictionary<int, Key>();
+        private void Reset() => Hash();
 
-        private void OnEnable()
+        private void Hash()
         {
-            if(m_registeredKeys.ContainsKey(m_hash)) return;
-            m_registeredKeys.Add(m_hash, this);
+            if(!string.IsNullOrEmpty(m_guid)) return;
+            m_guid = Guid.NewGuid().ToString();
+            m_hash = HashFunctions.FNVHash(m_guid);
         }
-
-        public static Key GetKey(int hash) => m_registeredKeys.GetValueOrDefault(hash);
-
-        private void OnValidate() => m_hash = HashFunctions.FNVHash(name);
-
-        private void Reset() => m_hash = HashFunctions.FNVHash(name);
 
         public static bool operator ==(Key a, Key b)
         {

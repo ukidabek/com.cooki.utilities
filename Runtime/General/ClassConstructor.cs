@@ -8,7 +8,8 @@ namespace Utilities.General
     /// <summary>
     /// Experimental class.
     /// </summary>
-    [Serializable] public class ClassConstructor
+    [Serializable] 
+    public class ClassConstructor
     {
         [Serializable] public class TypeInfo
         {

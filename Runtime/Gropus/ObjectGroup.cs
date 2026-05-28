@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ namespace Utilities.Groups
 {
     public abstract class ObjectGroup : ScriptableObject
     {
+        protected virtual void OnEnable() => Clear();
+
         public abstract IEnumerable<Object> GetObjects();
         public abstract void AddObject(Object obj);
         public abstract void RemoveObject(Object obj);
