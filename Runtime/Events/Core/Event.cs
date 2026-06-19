@@ -79,6 +79,9 @@ namespace Utilities.General.Events.Core
                 m_listeners.Remove(listener);
             foreach (var listener in m_listenersToAdd)
                 m_listeners.Add(listener);
+            
+            m_listenerToRemove.Clear();
+            m_listenersToAdd.Clear();
         } 
 
         [Conditional("UNITY_EDITOR")]
