@@ -14,15 +14,27 @@ namespace Utilities.General.Events.Core
         [SerializeField] protected Color m_color = new Color(0f, 0f, 0f, 1f);
         
         protected HashSet<T> m_listeners = new HashSet<T>(30);
+        protected HashSet<T> m_listenerToRemove = new HashSet<T>(30);
+        protected HashSet<T> m_listenersToAdd = new HashSet<T>(30);
+
+        protected int m_invokeLevel = 0;
         
         public virtual void Invoke()
         {
             LogEventInvoke();
-            InvokeListeners(m_listeners, listener => listener.Invoke());
+            InvokeListeners(m_listeners, ProcessListener, ref m_invokeLevel);
+            FlushListeners();
         }
 
-        protected static void InvokeListeners(HashSet<T> listeners, Action<T> invoker)
+        protected virtual void ProcessListener(T listener)
         {
+            if(m_listenerToRemove.Contains(listener)) return;
+            listener.Invoke();
+        }
+
+        protected void InvokeListeners(HashSet<T> listeners, Action<T> invoker, ref int invokeLevel)
+        {
+            invokeLevel++;
             foreach (var listener in listeners)
             {
                 try
@@ -34,11 +46,40 @@ namespace Utilities.General.Events.Core
                     Debug.LogException(exception);
                 }
             }
+            invokeLevel--;
         }
 
-        public void Subscribe(T listener) => m_listeners.Add(listener);
+        public void Subscribe(T listener)
+        {
+            if (m_invokeLevel > 0)
+            {
+                m_listenerToRemove.Remove(listener);
+                m_listenersToAdd.Add(listener);
+                return;
+            }
+            m_listeners.Add(listener);
+        }
 
-        public void Unsubscribe(T listener) => m_listeners.Remove(listener);
+        public void Unsubscribe(T listener)
+        {
+            if (m_invokeLevel > 0)
+            {
+                m_listenerToRemove.Add(listener);
+                m_listenersToAdd.Remove(listener);
+                return;
+            }
+            m_listeners.Remove(listener);
+        }
+
+        protected void FlushListeners()
+        {
+            if (m_invokeLevel > 0) return;
+            
+            foreach (var listener in m_listenerToRemove)
+                m_listeners.Remove(listener);
+            foreach (var listener in m_listenersToAdd)
+                m_listeners.Add(listener);
+        } 
 
         [Conditional("UNITY_EDITOR")]
         [Conditional("DEVELOPMENT_BUILD")]
@@ -47,7 +88,6 @@ namespace Utilities.General.Events.Core
             if (!m_enableLogging) return;
             var colorHexValue = ColorUtility.ToHtmlStringRGB(m_color);
             Debug.LogFormat(Invoke_Log_Format, colorHexValue, name);
-
         }
     }
 }
